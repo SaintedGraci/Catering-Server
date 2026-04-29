@@ -77,7 +77,7 @@ exports.createBooking = async (req, res) => {
     } = req.body;
 
     // Validate required fields
-    if (!customerName || !customerEmail || !customerPhone || !eventDate || !guestCount || !packageName || !tier || !tierName) {
+    if (!customerName || !customerEmail || !customerPhone || !eventDate || !guestCount || !tier) {
       return res.status(400).json({
         success: false,
         message: 'Missing required fields'
