@@ -26,6 +26,10 @@ const analyticsRoutes = require('./src/Routes/analyticsRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy - Required for Railway/Render/Heroku and other platforms behind proxies
+// This allows Express to correctly identify client IPs from X-Forwarded-For headers
+app.set('trust proxy', 1);
+
 // Disable X-Powered-By header
 app.disable('x-powered-by');
 
