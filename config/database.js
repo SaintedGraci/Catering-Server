@@ -2,27 +2,45 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const { DB_POOL, DB_TIMEZONE } = require('./db.constants');
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 3306,
-    dialect: process.env.DB_DIALECT || 'mysql',
-    logging: false, // Set to console.log to see SQL queries
+let sequelize;
+
+// Check if DATABASE_URL is provided (Railway with database reference)
+if (process.env.DATABASE_URL) {
+  console.log('Using DATABASE_URL for connection');
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'mysql',
+    logging: false,
     pool: DB_POOL,
     timezone: DB_TIMEZONE,
     dialectOptions: {
-      ssl: process.env.DB_HOST && process.env.DB_HOST.includes('railway') 
-        ? {
-            require: true,
-            rejectUnauthorized: false
-          }
-        : undefined
+      ssl: false // Railway internal network doesn't need SSL
     }
-  }
-);
+  });
+} else {
+  // Use individual variables (local development)
+  console.log('Using individual DB variables for connection');
+  sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT || 3306,
+      dialect: process.env.DB_DIALECT || 'mysql',
+      logging: false,
+      pool: DB_POOL,
+      timezone: DB_TIMEZONE,
+      dialectOptions: {
+        ssl: process.env.DB_HOST && process.env.DB_HOST.includes('railway') 
+          ? {
+              require: true,
+              rejectUnauthorized: false
+            }
+          : undefined
+      }
+    }
+  );
+}
 
 const connectDB = async () => {
   try {
