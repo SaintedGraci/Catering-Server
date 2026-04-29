@@ -37,7 +37,7 @@ router.post('/image', authenticate, upload.single('image'), async (req, res) => 
           folder: 'catering-dishes', // Organize images in folders
           resource_type: 'image',
           transformation: [
-            { width: 800, height: 800, crop: 'limit' }, // Resize large images
+            { width: 800, height: 800, crop: 'fill', gravity: 'auto' }, // Square crop with smart focus
             { quality: 'auto' } // Auto optimize quality
           ]
         },
@@ -89,7 +89,7 @@ router.post('/images', authenticate, upload.array('images', 10), async (req, res
             folder: 'catering-dishes',
             resource_type: 'image',
             transformation: [
-              { width: 800, height: 800, crop: 'limit' },
+              { width: 800, height: 800, crop: 'fill', gravity: 'auto' }, // Square crop with smart focus
               { quality: 'auto' }
             ]
           },
