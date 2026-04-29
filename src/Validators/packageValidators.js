@@ -25,13 +25,21 @@ const createPackageSchema = Joi.object({
       'any.only': 'Menu type must be one of: wedding, corporate, private, birthday, custom',
       'any.required': 'Menu type is required'
     }),
-  minPrice: Joi.number()
-    .positive()
+  priceRange: Joi.string()
+    .min(1)
+    .max(100)
     .required()
     .messages({
+      'string.min': 'Price range is required',
+      'string.max': 'Price range cannot exceed 100 characters',
+      'any.required': 'Price range is required'
+    }),
+  minPrice: Joi.number()
+    .positive()
+    .optional()
+    .messages({
       'number.base': 'Minimum price must be a number',
-      'number.positive': 'Minimum price must be positive',
-      'any.required': 'Minimum price is required'
+      'number.positive': 'Minimum price must be positive'
     }),
   maxPrice: Joi.number()
     .positive()
@@ -98,6 +106,14 @@ const updatePackageSchema = Joi.object({
     .optional()
     .messages({
       'any.only': 'Menu type must be one of: wedding, corporate, private, birthday, custom'
+    }),
+  priceRange: Joi.string()
+    .min(1)
+    .max(100)
+    .optional()
+    .messages({
+      'string.min': 'Price range cannot be empty',
+      'string.max': 'Price range cannot exceed 100 characters'
     }),
   minPrice: Joi.number()
     .positive()
