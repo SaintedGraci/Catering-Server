@@ -127,10 +127,10 @@ router.post('/images', authenticate, upload.array('images', 10), async (req, res
 });
 
 // Delete image from Cloudinary (admin only)
-router.delete('/image/*', authenticate, async (req, res) => {
+// Note: publicId should be sent in request body since it can contain slashes
+router.delete('/image', authenticate, async (req, res) => {
   try {
-    // Get the full path after /image/
-    const publicId = req.params[0];
+    const { publicId } = req.body;
     
     if (!publicId) {
       return res.status(400).json({
