@@ -37,11 +37,27 @@ const createBookingSchema = Joi.object({
       'string.max': 'Address cannot exceed 500 characters'
     }),
   eventDate: Joi.date()
-    .min('now')
+    .iso()
+    .custom((value, helpers) => {
+      // Get today's date at midnight in local timezone
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      // Get the event date at midnight
+      const eventDate = new Date(value);
+      eventDate.setHours(0, 0, 0, 0);
+      
+      // Compare dates (not times)
+      if (eventDate < today) {
+        return helpers.error('date.min');
+      }
+      
+      return value;
+    })
     .required()
     .messages({
       'date.base': 'Please provide a valid event date',
-      'date.min': 'Event date must be in the future',
+      'date.min': 'Event date must be today or in the future',
       'any.required': 'Event date is required'
     }),
   eventTime: Joi.string()
