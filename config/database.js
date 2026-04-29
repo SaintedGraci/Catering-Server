@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const { DB_POOL, DB_TIMEZONE } = require('./db.constants');
 

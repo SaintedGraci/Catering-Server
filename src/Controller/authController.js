@@ -34,19 +34,21 @@ const generateRefreshToken = (user) => {
 
 // Set auth cookies
 const setAuthCookies = (res, accessToken, refreshToken) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  
   // Access token cookie (short-lived)
   res.cookie('token', accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: isProduction, // Must be true for SameSite=None
+    sameSite: isProduction ? 'none' : 'lax', // 'none' for cross-domain in production
     maxAge: 15 * 60 * 1000 // 15 minutes
   });
 
   // Refresh token cookie (long-lived)
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: isProduction, // Must be true for SameSite=None
+    sameSite: isProduction ? 'none' : 'lax', // 'none' for cross-domain in production
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     path: '/api/auth/refresh' // Only sent to refresh endpoint
   });
@@ -241,11 +243,13 @@ exports.refresh = async (req, res) => {
     // Generate new access token
     const newAccessToken = generateAccessToken(user);
 
+    const isProduction = process.env.NODE_ENV === 'production';
+    
     // Set new access token cookie (keep refresh token)
     res.cookie('token', newAccessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 15 * 60 * 1000 // 15 minutes
     });
 
