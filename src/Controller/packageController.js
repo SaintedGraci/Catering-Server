@@ -160,11 +160,11 @@ exports.createPackage = async (req, res) => {
 
     // Add dishes if provided
     if (dishes && Array.isArray(dishes) && dishes.length > 0) {
-      const packageDishes = dishes.map(dish => ({
+      const packageDishes = dishes.map((dish, index) => ({
         packageId: pkg.id,
-        dishId: dish.dishId,
+        dishId: typeof dish === 'number' ? dish : dish.dishId,
         category: dish.category || null,
-        sortOrder: dish.sortOrder || 0
+        sortOrder: dish.sortOrder !== undefined ? dish.sortOrder : index
       }));
       await PackageDish.bulkCreate(packageDishes);
     }
