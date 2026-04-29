@@ -19,7 +19,7 @@ const menuRoutes = require('./src/Routes/menuRoutes');
 const bookingRoutes = require('./src/Routes/bookingRoutes');
 const testimonialRoutes = require('./src/Routes/testimonialRoutes');
 const packageRoutes = require('./src/Routes/packageRoutes');
-const uploadRoutes = require('./src/Routes/uploadRoutes');
+const uploadRoutes = require('./src/Routes/uploadRoutesCloudinary');
 const settingsRoutes = require('./src/Routes/settingsRoutes');
 const analyticsRoutes = require('./src/Routes/analyticsRoutes');
 
