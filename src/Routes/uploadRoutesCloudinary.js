@@ -127,9 +127,17 @@ router.post('/images', authenticate, upload.array('images', 10), async (req, res
 });
 
 // Delete image from Cloudinary (admin only)
-router.delete('/image/:publicId(*)', authenticate, async (req, res) => {
+router.delete('/image/*', authenticate, async (req, res) => {
   try {
-    const publicId = req.params.publicId;
+    // Get the full path after /image/
+    const publicId = req.params[0];
+    
+    if (!publicId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Public ID is required'
+      });
+    }
     
     // Delete from Cloudinary
     const result = await cloudinary.uploader.destroy(publicId);
