@@ -135,7 +135,10 @@ exports.createPackage = async (req, res) => {
     } = req.body;
 
     // Validate required fields
+    console.log('Create package - received data:', { name, menuType, priceRange, includes, includesType: typeof includes, includesIsArray: Array.isArray(includes) });
+    
     if (!name || !menuType || !priceRange || !includes || !Array.isArray(includes) || includes.length === 0) {
+      console.log('Validation failed:', { name: !!name, menuType: !!menuType, priceRange: !!priceRange, includes: !!includes, isArray: Array.isArray(includes), length: includes?.length });
       return res.status(400).json({
         success: false,
         message: 'Name, menu type, price range, and includes are required'
