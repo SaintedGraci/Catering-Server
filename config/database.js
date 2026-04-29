@@ -1,6 +1,11 @@
-require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const { DB_POOL, DB_TIMEZONE } = require('./db.constants');
+
+// Debug: Log environment variables (Railway should inject these)
+console.log('Environment check:');
+console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+console.log('DB_HOST exists:', !!process.env.DB_HOST);
+console.log('NODE_ENV:', process.env.NODE_ENV);
 
 let sequelize;
 
