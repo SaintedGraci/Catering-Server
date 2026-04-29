@@ -135,7 +135,7 @@ exports.createPackage = async (req, res) => {
     } = req.body;
 
     // Validate required fields
-    if (!name || !menuType || !priceRange || !includes) {
+    if (!name || !menuType || !priceRange || !includes || !Array.isArray(includes) || includes.length === 0) {
       return res.status(400).json({
         success: false,
         message: 'Name, menu type, price range, and includes are required'
@@ -237,11 +237,11 @@ exports.updatePackage = async (req, res) => {
       
       // Add new dishes
       if (dishes.length > 0) {
-        const packageDishes = dishes.map(dish => ({
+        const packageDishes = dishes.map((dishId, index) => ({
           packageId: id,
-          dishId: dish.dishId,
-          category: dish.category || null,
-          sortOrder: dish.sortOrder || 0
+          dishId: typeof dishId === 'number' ? dishId : dishId.dishId,
+          category: dishId.category || null,
+          sortOrder: dishId.sortOrder !== undefined ? dishId.sortOrder : index
         }));
         await PackageDish.bulkCreate(packageDishes);
       }
