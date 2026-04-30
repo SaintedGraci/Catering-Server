@@ -43,7 +43,8 @@ const Booking = sequelize.define('Booking', {
   packageId: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    comment: 'Reference to Menu ID'
+    references: null, // Remove foreign key constraint
+    comment: 'Reference to Menu ID (optional)'
   },
   packageName: {
     type: DataTypes.STRING,

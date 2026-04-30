@@ -6,8 +6,19 @@ async function fixBookingSchema() {
     await sequelize.authenticate();
     console.log('Connected successfully.');
 
-    console.log('Altering bookings table to make packageName and tierName nullable...');
+    console.log('Fixing bookings table schema...');
     
+    // Drop the foreign key constraint
+    try {
+      await sequelize.query(`
+        ALTER TABLE bookings 
+        DROP FOREIGN KEY bookings_ibfk_1;
+      `);
+      console.log('✓ Removed foreign key constraint on packageId');
+    } catch (error) {
+      console.log('Note: Foreign key constraint may not exist or already removed');
+    }
+
     // Make packageName nullable
     await sequelize.query(`
       ALTER TABLE bookings 
