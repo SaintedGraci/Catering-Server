@@ -128,6 +128,7 @@ exports.createPackage = async (req, res) => {
       maxPrice,
       includes,
       dishSelectionCount,
+      dishSelectionRules,
       dishes,
       isFeatured,
       isActive,
@@ -135,7 +136,7 @@ exports.createPackage = async (req, res) => {
     } = req.body;
 
     // Validate required fields
-    console.log('Create package - received data:', { name, menuType, priceRange, includes, includesType: typeof includes, includesIsArray: Array.isArray(includes) });
+    console.log('Create package - received data:', { name, menuType, priceRange, includes, includesType: typeof includes, includesIsArray: Array.isArray(includes), dishSelectionRules });
     
     if (!name || !menuType || !priceRange || !includes || !Array.isArray(includes) || includes.length === 0) {
       console.log('Validation failed:', { name: !!name, menuType: !!menuType, priceRange: !!priceRange, includes: !!includes, isArray: Array.isArray(includes), length: includes?.length });
@@ -154,6 +155,7 @@ exports.createPackage = async (req, res) => {
       maxPrice,
       includes: Array.isArray(includes) ? includes : [],
       dishSelectionCount,
+      dishSelectionRules: dishSelectionRules || null,
       isFeatured: isFeatured || false,
       isActive: isActive !== undefined ? isActive : true
     });
@@ -205,11 +207,14 @@ exports.updatePackage = async (req, res) => {
       maxPrice,
       includes,
       dishSelectionCount,
+      dishSelectionRules,
       dishes,
       isFeatured,
       isActive,
       sortOrder
     } = req.body;
+
+    console.log('Update package - received dishSelectionRules:', dishSelectionRules);
 
     const pkg = await Package.findByPk(id);
 
@@ -229,6 +234,7 @@ exports.updatePackage = async (req, res) => {
       maxPrice: maxPrice !== undefined ? maxPrice : pkg.maxPrice,
       includes: includes !== undefined ? includes : pkg.includes,
       dishSelectionCount: dishSelectionCount !== undefined ? dishSelectionCount : pkg.dishSelectionCount,
+      dishSelectionRules: dishSelectionRules !== undefined ? dishSelectionRules : pkg.dishSelectionRules,
       isFeatured: isFeatured !== undefined ? isFeatured : pkg.isFeatured,
       isActive: isActive !== undefined ? isActive : pkg.isActive
     });
