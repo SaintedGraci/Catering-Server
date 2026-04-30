@@ -51,6 +51,11 @@ const Booking = sequelize.define('Booking', {
     allowNull: true,
     comment: 'Menu/Package name at time of booking'
   },
+  packagePrice: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'Package price range at time of booking (e.g., ₱850 – ₱1,500 / guest)'
+  },
   tier: {
     type: DataTypes.ENUM('essential', 'signature', 'bespoke'),
     allowNull: false

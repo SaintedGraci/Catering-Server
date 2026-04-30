@@ -85,6 +85,13 @@ const createBookingSchema = Joi.object({
     .messages({
       'string.max': 'Package name cannot exceed 200 characters'
     }),
+  packagePrice: Joi.string()
+    .max(200)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Package price cannot exceed 200 characters'
+    }),
   tier: Joi.string()
     .valid('essential', 'signature', 'bespoke')
     .required()
