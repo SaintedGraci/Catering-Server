@@ -45,7 +45,13 @@ const Package = sequelize.define('Package', {
   dishSelectionCount: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    comment: 'Number of dishes customer can select from available dishes (e.g., 3, 5, 8)'
+    comment: 'DEPRECATED: Use dishSelectionRules instead. Number of dishes customer can select'
+  },
+  dishSelectionRules: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: null,
+    comment: 'Category-specific dish selection rules, e.g., {"main_course": 2, "appetizer": 2, "beverage": 1}'
   },
   isFeatured: {
     type: DataTypes.BOOLEAN,

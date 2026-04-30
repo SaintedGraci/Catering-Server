@@ -69,6 +69,16 @@ const createPackageSchema = Joi.object({
       'number.min': 'Dish selection count cannot be negative',
       'number.max': 'Dish selection count cannot exceed 100'
     }),
+  dishSelectionRules: Joi.object()
+    .pattern(
+      Joi.string().valid('appetizer', 'main_course', 'side_dish', 'dessert', 'beverage'),
+      Joi.number().integer().min(0).max(50)
+    )
+    .optional()
+    .allow(null)
+    .messages({
+      'object.base': 'Dish selection rules must be an object with category counts'
+    }),
   isFeatured: Joi.boolean()
     .optional()
     .default(false),
@@ -145,6 +155,16 @@ const updatePackageSchema = Joi.object({
       'number.integer': 'Dish selection count must be a whole number',
       'number.min': 'Dish selection count cannot be negative',
       'number.max': 'Dish selection count cannot exceed 100'
+    }),
+  dishSelectionRules: Joi.object()
+    .pattern(
+      Joi.string().valid('appetizer', 'main_course', 'side_dish', 'dessert', 'beverage'),
+      Joi.number().integer().min(0).max(50)
+    )
+    .optional()
+    .allow(null)
+    .messages({
+      'object.base': 'Dish selection rules must be an object with category counts'
     }),
   isFeatured: Joi.boolean()
     .optional(),
