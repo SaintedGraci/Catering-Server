@@ -100,7 +100,16 @@ const createBookingSchema = Joi.object({
       'string.max': 'Tier name cannot exceed 200 characters'
     }),
   selectedDishes: Joi.array()
-    .items(Joi.number().integer().positive())
+    .items(
+      Joi.alternatives().try(
+        Joi.number().integer().positive(), // Accept plain numbers (old format)
+        Joi.object({                        // Accept objects with dish details (new format)
+          id: Joi.number().integer().positive().required(),
+          name: Joi.string().optional(),
+          category: Joi.string().optional()
+        })
+      )
+    )
     .optional()
     .default([])
     .messages({
