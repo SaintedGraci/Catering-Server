@@ -47,7 +47,7 @@ const Booking = sequelize.define('Booking', {
   },
   packageName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: 'Menu/Package name at time of booking'
   },
   tier: {
@@ -56,7 +56,7 @@ const Booking = sequelize.define('Booking', {
   },
   tierName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: 'Tier name at time of booking'
   },
   selectedDishes: {

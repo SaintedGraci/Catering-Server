@@ -72,11 +72,18 @@ const createBookingSchema = Joi.object({
   packageId: Joi.number()
     .integer()
     .positive()
-    .required()
+    .optional()
+    .allow(null)
     .messages({
       'number.base': 'Package ID must be a number',
-      'number.positive': 'Package ID must be positive',
-      'any.required': 'Package selection is required'
+      'number.positive': 'Package ID must be positive'
+    }),
+  packageName: Joi.string()
+    .max(200)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Package name cannot exceed 200 characters'
     }),
   tier: Joi.string()
     .valid('essential', 'signature', 'bespoke')
@@ -84,6 +91,13 @@ const createBookingSchema = Joi.object({
     .messages({
       'any.only': 'Tier must be one of: essential, signature, bespoke',
       'any.required': 'Tier selection is required'
+    }),
+  tierName: Joi.string()
+    .max(200)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Tier name cannot exceed 200 characters'
     }),
   selectedDishes: Joi.array()
     .items(Joi.number().integer().positive())
