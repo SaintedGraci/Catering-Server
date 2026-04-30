@@ -21,31 +21,21 @@ const Package = sequelize.define('Package', {
     allowNull: false,
     comment: 'Links to menu type: wedding, corporate, private, birthday, custom'
   },
-  priceRange: {
+  estimatedPrice: {
     type: DataTypes.STRING,
     allowNull: false,
-    comment: 'e.g., "₱850 – ₱1,500 / guest"'
+    comment: 'Total package price range (e.g., "₱150 - ₱1000", "₱50,000")'
   },
-  minPrice: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: true,
-    comment: 'Minimum price per guest'
-  },
-  maxPrice: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: true,
-    comment: 'Maximum price per guest'
+  goodForPax: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    comment: 'Number of people this package is good for (e.g., 90, 50, 100)'
   },
   includes: {
     type: DataTypes.JSON,
     allowNull: false,
     defaultValue: [],
     comment: 'Array of included items/features'
-  },
-  dishSelectionCount: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    comment: 'DEPRECATED: Use dishSelectionRules instead. Number of dishes customer can select'
   },
   dishSelectionRules: {
     type: DataTypes.JSON,

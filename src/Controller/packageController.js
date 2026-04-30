@@ -123,11 +123,9 @@ exports.createPackage = async (req, res) => {
       name,
       description,
       menuType,
-      priceRange,
-      minPrice,
-      maxPrice,
+      estimatedPrice,
+      goodForPax,
       includes,
-      dishSelectionCount,
       dishSelectionRules,
       dishes,
       isFeatured,
@@ -136,13 +134,13 @@ exports.createPackage = async (req, res) => {
     } = req.body;
 
     // Validate required fields
-    console.log('Create package - received data:', { name, menuType, priceRange, includes, includesType: typeof includes, includesIsArray: Array.isArray(includes), dishSelectionRules });
+    console.log('Create package - received data:', { name, menuType, estimatedPrice, goodForPax, includes, includesType: typeof includes, includesIsArray: Array.isArray(includes), dishSelectionRules });
     
-    if (!name || !menuType || !priceRange || !includes || !Array.isArray(includes) || includes.length === 0) {
-      console.log('Validation failed:', { name: !!name, menuType: !!menuType, priceRange: !!priceRange, includes: !!includes, isArray: Array.isArray(includes), length: includes?.length });
+    if (!name || !menuType || !estimatedPrice || !goodForPax || !includes || !Array.isArray(includes) || includes.length === 0) {
+      console.log('Validation failed:', { name: !!name, menuType: !!menuType, estimatedPrice: !!estimatedPrice, goodForPax: !!goodForPax, includes: !!includes, isArray: Array.isArray(includes), length: includes?.length });
       return res.status(400).json({
         success: false,
-        message: 'Name, menu type, price range, and includes are required'
+        message: 'Name, menu type, estimated price, good for pax, and includes are required'
       });
     }
 
@@ -150,11 +148,9 @@ exports.createPackage = async (req, res) => {
       name,
       description,
       menuType,
-      priceRange,
-      minPrice,
-      maxPrice,
+      estimatedPrice,
+      goodForPax,
       includes: Array.isArray(includes) ? includes : [],
-      dishSelectionCount,
       dishSelectionRules: dishSelectionRules || null,
       isFeatured: isFeatured || false,
       isActive: isActive !== undefined ? isActive : true
@@ -202,11 +198,9 @@ exports.updatePackage = async (req, res) => {
       name,
       description,
       menuType,
-      priceRange,
-      minPrice,
-      maxPrice,
+      estimatedPrice,
+      goodForPax,
       includes,
-      dishSelectionCount,
       dishSelectionRules,
       dishes,
       isFeatured,
@@ -229,11 +223,9 @@ exports.updatePackage = async (req, res) => {
       name: name || pkg.name,
       description: description !== undefined ? description : pkg.description,
       menuType: menuType || pkg.menuType,
-      priceRange: priceRange || pkg.priceRange,
-      minPrice: minPrice !== undefined ? minPrice : pkg.minPrice,
-      maxPrice: maxPrice !== undefined ? maxPrice : pkg.maxPrice,
+      estimatedPrice: estimatedPrice !== undefined ? estimatedPrice : pkg.estimatedPrice,
+      goodForPax: goodForPax !== undefined ? goodForPax : pkg.goodForPax,
       includes: includes !== undefined ? includes : pkg.includes,
-      dishSelectionCount: dishSelectionCount !== undefined ? dishSelectionCount : pkg.dishSelectionCount,
       dishSelectionRules: dishSelectionRules !== undefined ? dishSelectionRules : pkg.dishSelectionRules,
       isFeatured: isFeatured !== undefined ? isFeatured : pkg.isFeatured,
       isActive: isActive !== undefined ? isActive : pkg.isActive
