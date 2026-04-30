@@ -25,30 +25,24 @@ const createPackageSchema = Joi.object({
       'any.only': 'Menu type must be one of: wedding, corporate, private, birthday, custom',
       'any.required': 'Menu type is required'
     }),
-  priceRange: Joi.string()
+  estimatedPrice: Joi.string()
     .min(1)
     .max(100)
     .required()
     .messages({
-      'string.min': 'Price range is required',
-      'string.max': 'Price range cannot exceed 100 characters',
-      'any.required': 'Price range is required'
+      'string.min': 'Estimated price is required',
+      'string.max': 'Estimated price cannot exceed 100 characters',
+      'any.required': 'Estimated price is required'
     }),
-  minPrice: Joi.number()
+  goodForPax: Joi.number()
+    .integer()
     .positive()
-    .optional()
+    .required()
     .messages({
-      'number.base': 'Minimum price must be a number',
-      'number.positive': 'Minimum price must be positive'
-    }),
-  maxPrice: Joi.number()
-    .positive()
-    .greater(Joi.ref('minPrice'))
-    .optional()
-    .messages({
-      'number.base': 'Maximum price must be a number',
-      'number.positive': 'Maximum price must be positive',
-      'number.greater': 'Maximum price must be greater than minimum price'
+      'number.base': 'Good for pax must be a number',
+      'number.integer': 'Good for pax must be a whole number',
+      'number.positive': 'Good for pax must be positive',
+      'any.required': 'Good for pax is required'
     }),
   includes: Joi.array()
     .items(Joi.string().max(500))
@@ -56,18 +50,6 @@ const createPackageSchema = Joi.object({
     .default([])
     .messages({
       'array.base': 'Includes must be an array of strings'
-    }),
-  dishSelectionCount: Joi.number()
-    .integer()
-    .min(0)
-    .max(100)
-    .optional()
-    .default(0)
-    .messages({
-      'number.base': 'Dish selection count must be a number',
-      'number.integer': 'Dish selection count must be a whole number',
-      'number.min': 'Dish selection count cannot be negative',
-      'number.max': 'Dish selection count cannot exceed 100'
     }),
   dishSelectionRules: Joi.object()
     .pattern(
@@ -117,44 +99,28 @@ const updatePackageSchema = Joi.object({
     .messages({
       'any.only': 'Menu type must be one of: wedding, corporate, private, birthday, custom'
     }),
-  priceRange: Joi.string()
+  estimatedPrice: Joi.string()
     .min(1)
     .max(100)
     .optional()
     .messages({
-      'string.min': 'Price range cannot be empty',
-      'string.max': 'Price range cannot exceed 100 characters'
+      'string.min': 'Estimated price cannot be empty',
+      'string.max': 'Estimated price cannot exceed 100 characters'
     }),
-  minPrice: Joi.number()
+  goodForPax: Joi.number()
+    .integer()
     .positive()
     .optional()
     .messages({
-      'number.base': 'Minimum price must be a number',
-      'number.positive': 'Minimum price must be positive'
-    }),
-  maxPrice: Joi.number()
-    .positive()
-    .optional()
-    .messages({
-      'number.base': 'Maximum price must be a number',
-      'number.positive': 'Maximum price must be positive'
+      'number.base': 'Good for pax must be a number',
+      'number.integer': 'Good for pax must be a whole number',
+      'number.positive': 'Good for pax must be positive'
     }),
   includes: Joi.array()
     .items(Joi.string().max(500))
     .optional()
     .messages({
       'array.base': 'Includes must be an array of strings'
-    }),
-  dishSelectionCount: Joi.number()
-    .integer()
-    .min(0)
-    .max(100)
-    .optional()
-    .messages({
-      'number.base': 'Dish selection count must be a number',
-      'number.integer': 'Dish selection count must be a whole number',
-      'number.min': 'Dish selection count cannot be negative',
-      'number.max': 'Dish selection count cannot exceed 100'
     }),
   dishSelectionRules: Joi.object()
     .pattern(
