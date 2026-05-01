@@ -14,6 +14,12 @@ const Settings = sequelize.define('Settings', {
     defaultValue: 'Filipino Catering Co.',
     comment: 'Business name displayed on the website'
   },
+  websiteName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: 'Filipino Catering',
+    comment: 'Website name/title shown in browser tab and header'
+  },
   tagline: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -29,6 +35,62 @@ const Settings = sequelize.define('Settings', {
     allowNull: true,
     comment: 'Logo image path'
   },
+  favicon: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'Favicon image path'
+  },
+  
+  // Hero Section
+  heroTitle: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: 'Authentic Filipino Catering',
+    comment: 'Main hero section title'
+  },
+  heroSubtitle: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    defaultValue: 'Bringing the flavors of the Philippines to your special events',
+    comment: 'Hero section subtitle'
+  },
+  heroCtaText: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: 'Book Your Event',
+    comment: 'Hero call-to-action button text'
+  },
+  heroImage: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'Hero section background image'
+  },
+  
+  // About Section
+  aboutTitle: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: 'About Us',
+    comment: 'About section title'
+  },
+  aboutContent: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: 'About section content'
+  },
+  
+  // Footer
+  footerText: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: 'Footer copyright/description text'
+  },
+  footerLinks: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: [],
+    comment: 'Footer navigation links'
+  },
   
   // Contact Information
   email: {
@@ -40,6 +102,11 @@ const Settings = sequelize.define('Settings', {
     type: DataTypes.STRING,
     allowNull: true,
     comment: 'Business phone number'
+  },
+  whatsapp: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'WhatsApp number for quick contact'
   },
   address: {
     type: DataTypes.TEXT,
@@ -62,6 +129,21 @@ const Settings = sequelize.define('Settings', {
     type: DataTypes.STRING,
     allowNull: true,
     comment: 'Twitter profile URL'
+  },
+  linkedinUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'LinkedIn profile URL'
+  },
+  youtubeUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'YouTube channel URL'
+  },
+  tiktokUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'TikTok profile URL'
   },
   
   // Business Hours
@@ -101,6 +183,26 @@ const Settings = sequelize.define('Settings', {
     defaultValue: 500,
     comment: 'Default maximum guest count'
   },
+  bookingLeadTimeDays: {
+    type: DataTypes.INTEGER,
+    defaultValue: 7,
+    comment: 'Minimum days in advance for bookings'
+  },
+  cancellationPolicy: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: 'Cancellation policy text'
+  },
+  termsAndConditions: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: 'Terms and conditions text'
+  },
+  privacyPolicy: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: 'Privacy policy text'
+  },
   
   // SEO
   metaTitle: {
@@ -134,6 +236,35 @@ const Settings = sequelize.define('Settings', {
     type: DataTypes.STRING,
     defaultValue: 'Asia/Manila',
     comment: 'Business timezone'
+  },
+  
+  // Email Notifications
+  notificationEmail: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: 'Email to receive booking notifications'
+  },
+  emailNotificationsEnabled: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+    comment: 'Enable email notifications for new bookings'
+  },
+  
+  // Theme/Branding
+  primaryColor: {
+    type: DataTypes.STRING,
+    defaultValue: '#D97706',
+    comment: 'Primary brand color (hex)'
+  },
+  secondaryColor: {
+    type: DataTypes.STRING,
+    defaultValue: '#059669',
+    comment: 'Secondary brand color (hex)'
+  },
+  fontFamily: {
+    type: DataTypes.STRING,
+    defaultValue: 'Inter',
+    comment: 'Website font family'
   }
 }, {
   tableName: 'settings',
