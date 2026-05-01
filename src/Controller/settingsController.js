@@ -27,36 +27,13 @@ const getSettings = async (req, res) => {
 // Update settings (admin only)
 const updateSettings = async (req, res) => {
   try {
-    const {
-      businessName,
-      tagline,
-      description,
-      logo,
-      email,
-      phone,
-      address,
-      facebookUrl,
-      instagramUrl,
-      twitterUrl,
-      businessHours,
-      maintenanceMode,
-      allowBookings,
-      minGuestsDefault,
-      maxGuestsDefault,
-      metaTitle,
-      metaDescription,
-      metaKeywords,
-      currency,
-      currencySymbol,
-      timezone
-    } = req.body;
-
     // Get or create settings
     let settings = await Settings.findOne();
     
     if (!settings) {
       settings = await Settings.create(req.body);
     } else {
+      // Update all fields from request body
       await settings.update(req.body);
     }
 
@@ -69,7 +46,8 @@ const updateSettings = async (req, res) => {
     console.error('Update settings error:', error);
     res.status(500).json({
       success: false,
-      message: 'Server error while updating settings'
+      message: 'Server error while updating settings',
+      error: error.message
     });
   }
 };

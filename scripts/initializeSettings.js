@@ -21,8 +21,14 @@ async function initializeSettings() {
     // Create default settings
     const settings = await Settings.create({
       businessName: 'Filipino Catering Co.',
+      websiteName: 'Sampaguita & Saro',
       tagline: 'Authentic Filipino cuisine for your special events',
       description: 'We bring the authentic taste of Filipino cuisine to your special occasions. From intimate gatherings to grand celebrations, our experienced team delivers exceptional catering services with traditional recipes passed down through generations.',
+      heroTitle: 'Authentic Filipino Catering',
+      heroSubtitle: 'Bringing the flavors of the Philippines to your special events',
+      heroCtaText: 'Book Your Event',
+      aboutTitle: 'About Us',
+      aboutContent: 'We are passionate about sharing the rich culinary heritage of the Philippines through our catering services.',
       email: 'info@filipinocatering.com',
       phone: '+63 912 345 6789',
       address: 'Manila, Philippines',
@@ -39,12 +45,16 @@ async function initializeSettings() {
       allowBookings: true,
       minGuestsDefault: 20,
       maxGuestsDefault: 500,
+      bookingLeadTimeDays: 7,
       metaTitle: 'Filipino Catering - Authentic Cuisine for Your Events',
       metaDescription: 'Professional Filipino catering services for weddings, corporate events, birthdays, and special occasions. Authentic recipes, exceptional service.',
       metaKeywords: 'filipino catering, wedding catering, corporate catering, manila catering, authentic filipino food, event catering',
       currency: 'PHP',
       currencySymbol: '₱',
-      timezone: 'Asia/Manila'
+      timezone: 'Asia/Manila',
+      primaryColor: '#D97706',
+      secondaryColor: '#059669',
+      emailNotificationsEnabled: true
     });
 
     console.log('✓ Default settings created successfully!\n');
